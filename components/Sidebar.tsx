@@ -9,13 +9,14 @@ import {
   ChevronDown, ArrowRight, MoreHorizontal, CircleHelp, AudioLines,
   LayoutDashboard, ClipboardCheck, Sparkles, MessageSquareText,
   Headphones, Settings2, Users, Bug, ListChecks, Bot as BotIcon, Shield,
-  PenSquare, GitCompareArrows, Settings
+  PenSquare, GitCompareArrows, Settings, Brain
 } from 'lucide-react'
 
 const WORKSPACE_LINKS = [
   { href: '/',            label: 'Overview',         Icon: LayoutDashboard },
   { href: '/grade',       label: 'Grade',            Icon: ClipboardCheck },
   { href: '/bulk-grade',  label: 'Bulk Grade',       Icon: Sparkles },
+  { href: '/llm-verdicts', label: 'AI Verdicts',     Icon: Brain },
   { href: '/prompts',     label: 'Prompt library',   Icon: MessageSquareText },
   { href: '/transcripts', label: 'Transcripts',      Icon: Headphones },
   { href: '/audit-import', label: 'Audit feedback',  Icon: PenSquare },
