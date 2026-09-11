@@ -1,0 +1,329 @@
+{
+  "success": true,
+  "patternCandidates": [
+    {
+      "kind": "pattern",
+      "suggestedName": "Non-adjacent line repeat",
+      "description": "Bot repeats \"sorry, i didn't catch that — are you still there?\" more than once within the same call, seen across 5 calls.",
+      "severity": "major",
+      "errorType": "repetition",
+      "stage": "any",
+      "detectionMethod": "behavioral",
+      "detectionConfig": {
+        "check": "repeat_count",
+        "threshold": 2,
+        "min_length": 25
+      },
+      "callCount": 5,
+      "confidence": "high",
+      "rationale": "Appears in 5 of 30 calls. Repeats are non-adjacent, so the existing consecutive-repeat rule does not catch them.",
+      "evidence": [
+        {
+          "callNumber": 2,
+          "excerpt": "said 17x: \"sorry, i didn't catch that — are you still there?\""
+        },
+        {
+          "callNumber": 5,
+          "excerpt": "said 14x: \"sorry, i didn't catch that — are you still there?\""
+        },
+        {
+          "callNumber": 11,
+          "excerpt": "said 3x: \"sorry, i didn't catch that — are you still there?\""
+        },
+        {
+          "callNumber": 15,
+          "excerpt": "said 3x: \"sorry, i didn't catch that — are you still there?\""
+        },
+        {
+          "callNumber": 18,
+          "excerpt": "said 2x: \"sorry, i didn't catch that — are you still there?\""
+        }
+      ]
+    },
+    {
+      "kind": "pattern",
+      "suggestedName": "Call ends on unanswered bot question",
+      "description": "The final turn is a bot question with no caller reply, in 12 calls. Suggests a disconnect or dead end rather than a clean close.",
+      "severity": "major",
+      "errorType": "timeout",
+      "stage": "closing",
+      "detectionMethod": "behavioral",
+      "detectionConfig": {
+        "check": "ends_on_question"
+      },
+      "callCount": 12,
+      "confidence": "high",
+      "rationale": "12 of 30 calls. Note: needs an 'ends_on_question' check added to BEHAVIORAL_CHECKS before it will run.",
+      "evidence": [
+        {
+          "callNumber": 6,
+          "excerpt": "Is there anything else I can help you with today?"
+        },
+        {
+          "callNumber": 7,
+          "excerpt": "I'm sorry, I didn't quite catch that. Could you please tell me which company you are joining — Reliance Jio, Reliance Non-Jio, or another co..."
+        },
+        {
+          "callNumber": 8,
+          "excerpt": "To initiate your Pre-Employment Health Checkup process, please contact your Company HR. Your HR team needs to share the required employee de..."
+        },
+        {
+          "callNumber": 9,
+          "excerpt": "I understand you need quick support. Our team will review the issue and reach out with an update within twenty-four hours. Is there anything..."
+        },
+        {
+          "callNumber": 10,
+          "excerpt": "I understand. Since you are from a different corporate organization, to initiate your Pre-Employment Health Checkup process, please contact ..."
+        }
+      ]
+    }
+  ],
+  "testCaseCandidates": [
+    {
+      "kind": "test_case",
+      "suggestedScenario": "caller_mentions_yeah",
+      "description": "10 callers raise \"yeah\", which no current test case scenario mentions.",
+      "callCount": 10,
+      "confidence": "medium",
+      "rationale": "Keyword-clustered, not intent-clustered — read the excerpts and decide whether these calls are really one scenario. Naming and expected behaviour are yours to write.",
+      "evidence": [
+        {
+          "callNumber": 2,
+          "excerpt": "Hello. 93. No, no, 5636. Yes. 88. 61725636. No, no. 886. 72. 5636. Yes, yes. Yes, yes, yes. LNTL&TL&T. Cosmet organizati..."
+        },
+        {
+          "callNumber": 4,
+          "excerpt": "Hello. Hello. Yeah, but. Not but I not yet. Book any slot. Yes. LTM. Different. Organization. Yeah, but I see on medi as..."
+        },
+        {
+          "callNumber": 5,
+          "excerpt": "Hello. Hello. Yes. Actually I have. Yeah, actually I am from. And I want to pre employment health checkup. In Jalgaon ci..."
+        },
+        {
+          "callNumber": 6,
+          "excerpt": "I wanted help with PHC pre booking. Hello. Yeah, yeah. Tell me. Yes. It works. Fine. Can you repeat my number again? Yes..."
+        },
+        {
+          "callNumber": 9,
+          "excerpt": "Yeah, actually I booked. For the exone package, okay. I visited the clinic and they are saying that they have not receiv..."
+        }
+      ]
+    },
+    {
+      "kind": "test_case",
+      "suggestedScenario": "caller_mentions_actually",
+      "description": "7 callers raise \"actually\", which no current test case scenario mentions.",
+      "callCount": 7,
+      "confidence": "medium",
+      "rationale": "Keyword-clustered, not intent-clustered — read the excerpts and decide whether these calls are really one scenario. Naming and expected behaviour are yours to write.",
+      "evidence": [
+        {
+          "callNumber": 2,
+          "excerpt": "Hello. 93. No, no, 5636. Yes. 88. 61725636. No, no. 886. 72. 5636. Yes, yes. Yes, yes, yes. LNTL&TL&T. Cosmet organizati..."
+        },
+        {
+          "callNumber": 5,
+          "excerpt": "Hello. Hello. Yes. Actually I have. Yeah, actually I am from. And I want to pre employment health checkup. In Jalgaon ci..."
+        },
+        {
+          "callNumber": 9,
+          "excerpt": "Yeah, actually I booked. For the exone package, okay. I visited the clinic and they are saying that they have not receiv..."
+        },
+        {
+          "callNumber": 15,
+          "excerpt": "Actually mere ko subah Mein call aaya tha Maine miss kar diya. Okay. Reliance Jio. Actually. Talk to customer care. Yes...."
+        },
+        {
+          "callNumber": 17,
+          "excerpt": "Hello. Hello. Actually I want to book a few medical employment test. No ma am. Am I audible? Hello. My number is 70. 741..."
+        }
+      ]
+    },
+    {
+      "kind": "test_case",
+      "suggestedScenario": "caller_mentions_corporate",
+      "description": "6 callers raise \"corporate\", which no current test case scenario mentions.",
+      "callCount": 6,
+      "confidence": "medium",
+      "rationale": "Keyword-clustered, not intent-clustered — read the excerpts and decide whether these calls are really one scenario. Naming and expected behaviour are yours to write.",
+      "evidence": [
+        {
+          "callNumber": 5,
+          "excerpt": "Hello. Hello. Yes. Actually I have. Yeah, actually I am from. And I want to pre employment health checkup. In Jalgaon ci..."
+        },
+        {
+          "callNumber": 8,
+          "excerpt": "Hello. Pune. No. 8698. 295697. Yes. Another corporate organization."
+        },
+        {
+          "callNumber": 10,
+          "excerpt": "Hi, today I. Schedule my health. Checked out so after after booking my home check up like I got a message that booking w..."
+        },
+        {
+          "callNumber": 11,
+          "excerpt": "Yeah, hi. Yes. Another corporate office. Yes. Can you transfer the line to? Customer care. I am not getting the required..."
+        },
+        {
+          "callNumber": 29,
+          "excerpt": "Hello. No. 87. 4375594. 837. 837. 43. 7559. Yes, yes. No, no, no. Actually I want to book NOSL check trip. Under corpora..."
+        }
+      ]
+    },
+    {
+      "kind": "test_case",
+      "suggestedScenario": "caller_mentions_test",
+      "description": "6 callers raise \"test\", which no current test case scenario mentions.",
+      "callCount": 6,
+      "confidence": "medium",
+      "rationale": "Keyword-clustered, not intent-clustered — read the excerpts and decide whether these calls are really one scenario. Naming and expected behaviour are yours to write.",
+      "evidence": [
+        {
+          "callNumber": 13,
+          "excerpt": "Hi so I have booked an appointment for medi buddy for the doctor and he. Suggested me some lab test. So. Do I pay now an..."
+        },
+        {
+          "callNumber": 16,
+          "excerpt": "Hello. Am I audible? So. I would like to ask. I would like to ask. Yeah. So I would like to ask about my. Lab test regar..."
+        },
+        {
+          "callNumber": 17,
+          "excerpt": "Hello. Hello. Actually I want to book a few medical employment test. No ma am. Am I audible? Hello. My number is 70. 741..."
+        },
+        {
+          "callNumber": 21,
+          "excerpt": "Ma am I have one GCD test? So I just want to know that the sample. Collection would be done on 2 times or. Single time. ..."
+        },
+        {
+          "callNumber": 25,
+          "excerpt": "I have already paid for my lab test which is. Mentioned as cashless. I have paid it with my self money. How to claim? Pa..."
+        }
+      ]
+    },
+    {
+      "kind": "test_case",
+      "suggestedScenario": "caller_mentions_organization",
+      "description": "5 callers raise \"organization\", which no current test case scenario mentions.",
+      "callCount": 5,
+      "confidence": "low",
+      "rationale": "Keyword-clustered, not intent-clustered — read the excerpts and decide whether these calls are really one scenario. Naming and expected behaviour are yours to write.",
+      "evidence": [
+        {
+          "callNumber": 2,
+          "excerpt": "Hello. 93. No, no, 5636. Yes. 88. 61725636. No, no. 886. 72. 5636. Yes, yes. Yes, yes, yes. LNTL&TL&T. Cosmet organizati..."
+        },
+        {
+          "callNumber": 4,
+          "excerpt": "Hello. Hello. Yeah, but. Not but I not yet. Book any slot. Yes. LTM. Different. Organization. Yeah, but I see on medi as..."
+        },
+        {
+          "callNumber": 5,
+          "excerpt": "Hello. Hello. Yes. Actually I have. Yeah, actually I am from. And I want to pre employment health checkup. In Jalgaon ci..."
+        },
+        {
+          "callNumber": 8,
+          "excerpt": "Hello. Pune. No. 8698. 295697. Yes. Another corporate organization."
+        },
+        {
+          "callNumber": 30,
+          "excerpt": "Hello. Hello. Ma am I need to? Ma am I required a complete health checkup? On tomorrow and I want to. Required a date. P..."
+        }
+      ]
+    },
+    {
+      "kind": "test_case",
+      "suggestedScenario": "caller_mentions_check",
+      "description": "5 callers raise \"check\", which no current test case scenario mentions.",
+      "callCount": 5,
+      "confidence": "low",
+      "rationale": "Keyword-clustered, not intent-clustered — read the excerpts and decide whether these calls are really one scenario. Naming and expected behaviour are yours to write.",
+      "evidence": [
+        {
+          "callNumber": 4,
+          "excerpt": "Hello. Hello. Yeah, but. Not but I not yet. Book any slot. Yes. LTM. Different. Organization. Yeah, but I see on medi as..."
+        },
+        {
+          "callNumber": 5,
+          "excerpt": "Hello. Hello. Yes. Actually I have. Yeah, actually I am from. And I want to pre employment health checkup. In Jalgaon ci..."
+        },
+        {
+          "callNumber": 10,
+          "excerpt": "Hi, today I. Schedule my health. Checked out so after after booking my home check up like I got a message that booking w..."
+        },
+        {
+          "callNumber": 11,
+          "excerpt": "Yeah, hi. Yes. Another corporate office. Yes. Can you transfer the line to? Customer care. I am not getting the required..."
+        },
+        {
+          "callNumber": 29,
+          "excerpt": "Hello. No. 87. 4375594. 837. 837. 43. 7559. Yes, yes. No, no, no. Actually I want to book NOSL check trip. Under corpora..."
+        }
+      ]
+    },
+    {
+      "kind": "test_case",
+      "suggestedScenario": "caller_mentions_checkup",
+      "description": "5 callers raise \"checkup\", which no current test case scenario mentions.",
+      "callCount": 5,
+      "confidence": "low",
+      "rationale": "Keyword-clustered, not intent-clustered — read the excerpts and decide whether these calls are really one scenario. Naming and expected behaviour are yours to write.",
+      "evidence": [
+        {
+          "callNumber": 5,
+          "excerpt": "Hello. Hello. Yes. Actually I have. Yeah, actually I am from. And I want to pre employment health checkup. In Jalgaon ci..."
+        },
+        {
+          "callNumber": 9,
+          "excerpt": "Yeah, actually I booked. For the exone package, okay. I visited the clinic and they are saying that they have not receiv..."
+        },
+        {
+          "callNumber": 11,
+          "excerpt": "Yeah, hi. Yes. Another corporate office. Yes. Can you transfer the line to? Customer care. I am not getting the required..."
+        },
+        {
+          "callNumber": 12,
+          "excerpt": "Meri Reliance Ki. The employment checkup. Pending HAI. Kota. Hindi. Hindi. Haan kariye. Schedule."
+        },
+        {
+          "callNumber": 30,
+          "excerpt": "Hello. Hello. Ma am I need to? Ma am I required a complete health checkup? On tomorrow and I want to. Required a date. P..."
+        }
+      ]
+    },
+    {
+      "kind": "test_case",
+      "suggestedScenario": "caller_mentions_buddy",
+      "description": "5 callers raise \"buddy\", which no current test case scenario mentions.",
+      "callCount": 5,
+      "confidence": "low",
+      "rationale": "Keyword-clustered, not intent-clustered — read the excerpts and decide whether these calls are really one scenario. Naming and expected behaviour are yours to write.",
+      "evidence": [
+        {
+          "callNumber": 5,
+          "excerpt": "Hello. Hello. Yes. Actually I have. Yeah, actually I am from. And I want to pre employment health checkup. In Jalgaon ci..."
+        },
+        {
+          "callNumber": 13,
+          "excerpt": "Hi so I have booked an appointment for medi buddy for the doctor and he. Suggested me some lab test. So. Do I pay now an..."
+        },
+        {
+          "callNumber": 16,
+          "excerpt": "Hello. Am I audible? So. I would like to ask. I would like to ask. Yeah. So I would like to ask about my. Lab test regar..."
+        },
+        {
+          "callNumber": 24,
+          "excerpt": "Hello. No, I need to enquire about a laptop. Yes, but I need to book some meri buddy. Right website."
+        },
+        {
+          "callNumber": 28,
+          "excerpt": "Hello. Hello. Hello. Yes. Revani. 39. Reliance Detail. 9 its Reliance Retail. Reliance. Reliance non Jio. No. Registered..."
+        }
+      ]
+    }
+  ],
+  "callsAnalysed": 30,
+  "notes": [
+    "These are heuristic suggestions from frequency and divergence analysis, not judgements about bot behaviour.",
+    "Nothing is written to the database until you accept it.",
+    "Low-confidence items are correlations — read the evidence before accepting."
+  ]
+}

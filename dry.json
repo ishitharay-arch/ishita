@@ -1,0 +1,39 @@
+{
+  "fileName": "audit-template.csv",
+  "dataRows": 5,
+  "mapped": 3,
+  "skipped": 2,
+  "verdictsDerivedFromRemarks": 0,
+  "matchedToGradedCalls": 3,
+  "notYetGraded": 0,
+  "byBot": {
+    "sameeksha": 3
+  },
+  "byVerdict": {
+    "fail": 2,
+    "pass": 1
+  },
+  "unmappedFlows": {},
+  "columnsUsed": {
+    "interaction_id": "InteractionID",
+    "verdict": "Verdict",
+    "remarks": "Remarks",
+    "flow": "Bot",
+    "auditor": "Auditor",
+    "audited_at": "Date",
+    "error_label": "Error label",
+    "severity": "Severity"
+  },
+  "sampleSkipped": [
+    {
+      "row": 5,
+      "reason": "no usable call id",
+      "value": ""
+    },
+    {
+      "row": 6,
+      "reason": "no usable call id",
+      "value": ""
+    }
+  ]
+}

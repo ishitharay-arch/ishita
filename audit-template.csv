@@ -1,0 +1,6 @@
+Date,InteractionID,CallSid,Bot,Auditor,Verdict,Error label,Severity,Remarks
+2026-09-01,5a8b83aa-8a9f-4926-bb45-2f58f2aa0aff,,Sameeksha,Ishitha,fail,greeting_reissue,major,"Bot repeated its opening PEHC line mid-call after identification"
+2026-09-01,74ef62be-87a7-4274-857c-5e030bb677d2,,Sameeksha,Ishitha,pass,,,Good call
+2026-09-01,31defbab-2d77-4421-9f4e-b6d495b28c80,,Sameeksha,Arya,fail,transfer_loop,critical,"Said transferring three times, call never handed off"
+2026-09-02,,abc123def456ghi789,Aishwarya,Arya,fail,asr_retry_loop,major,"Sorry I didn't catch that, five times in a row"
+2026-09-02,,,Radhika,Ishitha,partial,wrong_flow,minor,"Correct team but asked the service-type question twice"
