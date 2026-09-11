@@ -152,10 +152,12 @@ export default function LlmVerdictsPage() {
           ) : !total ? (
             <div className="lv-empty">
               <p>No AI verdicts for this bot yet.</p>
-              <small>Grade some transcripts to see Claude&apos;s verdicts here.</small>
-              <div className="lv-empty-actions">
-                <a href="/bulk-grade" className="ghost-button">Grade transcripts</a>
-              </div>
+              <small>
+                This page only shows verdicts Claude has written directly — it&apos;s separate from
+                Bulk Grade, which needs an Anthropic API key you haven&apos;t set up. Make sure this
+                bot has transcripts on the <a href="/transcripts" className="lv-link">Transcripts page</a>,
+                then ask Claude (in a coding session) to grade this bot&apos;s transcripts.
+              </small>
             </div>
           ) : (
             <>
