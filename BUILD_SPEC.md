@@ -91,10 +91,10 @@ One file. Four roles, each independently configurable from the UI:
 
 | Role | Purpose | Default |
 |---|---|---|
-| `generator` | writes test cases | claude-sonnet-4-6 |
-| `judge` | scores soft rules | claude-sonnet-4-6 |
-| `optimizer` | rewrites the prompt | claude-sonnet-4-6 |
-| `bot` | **the bot under test** | claude-sonnet-4-6 (temporary) |
+| `generator` | writes test cases | claude-sonnet-5 |
+| `judge` | scores soft rules | claude-sonnet-5 |
+| `optimizer` | rewrites the prompt | claude-sonnet-5 |
+| `bot` | **the bot under test** | claude-sonnet-5 (temporary) |
 
 ```ts
 export type Role = 'generator' | 'judge' | 'optimizer' | 'bot';

@@ -3,9 +3,19 @@
  * Separated from grade.ts to avoid circular dependencies.
  */
 
-import { callModel } from './models';
+import { z } from 'zod';
+import { callModelStructured } from './models';
 import { getModelConfig } from './config';
 import type { TranscriptTurn, TestCaseSpec, SoftRule, SoftScore } from './grade';
+
+const SoftScoreSchema = z.object({
+  ruleId: z.string(),
+  ruleName: z.string(),
+  score: z.number().int().min(1).max(5),
+  reason: z.string(),
+});
+
+const SoftScoresSchema = z.array(SoftScoreSchema);
 
 /**
  * Grade soft rules using Claude (LLM judge).
@@ -30,21 +40,7 @@ Soft rules are qualitative guidelines that don't have simple pass/fail criteria.
 - Appropriateness of responses
 - Natural conversation flow
 
-For each soft rule, provide:
-- A score from 1-5 (1 = poor, 5 = excellent)
-- A one-line reason for the score
-
-Return your response as a JSON array in this format:
-[
-  {
-    "ruleId": "rule_1",
-    "ruleName": "Empathy",
-    "score": 4,
-    "reason": "Bot showed good understanding but could be more comforting"
-  }
-]
-
-Return ONLY the JSON array, no prose or markdown fences.`;
+For each soft rule, provide a score from 1-5 (1 = poor, 5 = excellent) and a one-line reason for the score.`;
 
   const transcriptText = transcript
     .map(turn => `${turn.speaker}: ${turn.text}`)
@@ -61,37 +57,18 @@ ${JSON.stringify(testCaseSpec, null, 2)}
 SOFT RULES:
 ${softRules.map(rule => `- ${rule.name}: ${rule.description}`).join('\n')}
 
-Provide scores and reasons for each rule. Return ONLY the JSON array.`;
+Provide a score and reason for each rule listed above.`;
 
   try {
-    const response = await callModel('judge', systemPrompt, [{ role: 'user', content: userPrompt }], config);
+    const scores = await callModelStructured(
+      'judge',
+      systemPrompt,
+      [{ role: 'user', content: userPrompt }],
+      config,
+      SoftScoresSchema
+    );
 
-    // Strip markdown fences if present
-    let jsonStr = response.trim();
-    if (jsonStr.startsWith('```json')) {
-      jsonStr = jsonStr.slice(7);
-    } else if (jsonStr.startsWith('```')) {
-      jsonStr = jsonStr.slice(3);
-    }
-    if (jsonStr.endsWith('```')) {
-      jsonStr = jsonStr.slice(0, -3);
-    }
-    jsonStr = jsonStr.trim();
-
-    const scores = JSON.parse(jsonStr);
-    
-    // Validate structure
-    if (!Array.isArray(scores)) {
-      console.error('Soft rule grading did not return an array');
-      return [];
-    }
-
-    return scores.map((score: any) => ({
-      ruleId: score.ruleId || 'unknown',
-      ruleName: score.ruleName || 'Unknown Rule',
-      score: Math.min(5, Math.max(1, score.score || 3)),
-      reason: score.reason || 'No reason provided',
-    }));
+    return scores;
   } catch (error) {
     console.error('Error grading soft rules:', error);
     return [];

@@ -5,14 +5,15 @@ This document describes the Claude integration that has been added to the voice 
 ## What Was Implemented
 
 ### 1. Model Gateway (`lib/models.ts`)
-- **Anthropic API adapter**: Supports Claude models (claude-sonnet-4-6, claude-3-5-sonnet, etc.)
+- **Anthropic API adapter**: Uses the official `@anthropic-ai/sdk`, defaults to `claude-sonnet-5`
 - **OpenAI-compatible adapter**: Supports other providers (Ollama, Groq, OpenRouter, vLLM)
 - **Four configurable roles**: generator, judge, optimizer, bot
 - **Environment variable support**: Uses `ANTHROPIC_API_KEY` and `OPENAI_API_KEY`
+- **Structured outputs**: `callModelStructured()` takes a Zod schema and returns a guaranteed schema-conformant object via Claude's native structured outputs (no manual JSON parsing/markdown-fence stripping)
 
 ### 2. Configuration System (`lib/config.ts`)
 - **Environment variable loading**: Loads API keys and model settings from `.env` files
-- **Default configuration**: Sensible defaults for all roles using Claude Sonnet 4.6
+- **Default configuration**: Sensible defaults for all roles using Claude Sonnet 5
 - **Validation**: Checks for required environment variables
 
 ### 3. API Routes
@@ -38,6 +39,7 @@ This document describes the Claude integration that has been added to the voice 
 - **Soft rule grading**: Uses Claude to score qualitative rules (empathy, clarity, etc.)
 - **Diagnostic only**: Does not affect pass/fail gate
 - **1-5 scoring**: Provides detailed feedback with reasons
+- **Schema-validated**: Scores are returned via structured outputs (a Zod schema enforcing `ruleId`/`ruleName`/`score` 1-5/`reason`), so a malformed response can't silently produce bad scores
 
 ### 5. Mock Tool Layer (`lib/mockTools.ts`)
 - **Tool call interception**: Prevents real API calls during testing
@@ -113,10 +115,10 @@ ANTHROPIC_API_KEY=your_anthropic_api_key_here
 
 | Role | Purpose | Default Model |
 |------|---------|---------------|
-| `generator` | Writes test cases | claude-sonnet-4-6 |
-| `judge` | Scores soft rules | claude-sonnet-4-6 |
-| `optimizer` | Rewrites prompts | claude-sonnet-4-6 |
-| `bot` | Bot under test | claude-sonnet-4-6 (temporary) |
+| `generator` | Writes test cases | claude-sonnet-5 |
+| `judge` | Scores soft rules | claude-sonnet-5 |
+| `optimizer` | Rewrites prompts | claude-sonnet-5 |
+| `bot` | Bot under test | claude-sonnet-5 (temporary) |
 
 ### Warning Banner
 
@@ -164,7 +166,7 @@ curl http://localhost:3000/api/model-config
 Ensure `ANTHROPIC_API_KEY` is set in your environment variables or `.env.local` file.
 
 ### Model Not Found
-Verify the model name is correct for your provider. Claude models use the format `claude-sonnet-4-6`.
+Verify the model name is correct for your provider. Claude models use the format `claude-sonnet-5`.
 
 ### Timeout Errors
 The API routes have `maxDuration = 60` set. For complex operations, you may need to increase this or optimize prompts.

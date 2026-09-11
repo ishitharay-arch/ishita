@@ -19,19 +19,16 @@ type Config = {
 }
 
 const defaultConfig: Config = {
-  generator: { provider: 'anthropic', model: 'claude-sonnet-4-6' },
-  judge: { provider: 'anthropic', model: 'claude-sonnet-4-6' },
-  optimizer: { provider: 'anthropic', model: 'claude-sonnet-4-6' },
-  bot: { provider: 'anthropic', model: 'claude-sonnet-4-6' },
+  generator: { provider: 'anthropic', model: 'claude-sonnet-5' },
+  judge: { provider: 'anthropic', model: 'claude-sonnet-5' },
+  optimizer: { provider: 'anthropic', model: 'claude-sonnet-5' },
+  bot: { provider: 'anthropic', model: 'claude-sonnet-5' },
 }
 
 const anthropicModels = [
-  'claude-sonnet-4-6',
-  'claude-3-5-sonnet-20241022',
-  'claude-3-5-haiku-20241022',
-  'claude-3-opus-20240229',
-  'claude-3-sonnet-20240229',
-  'claude-3-haiku-20240307',
+  'claude-sonnet-5',
+  'claude-opus-5',
+  'claude-haiku-4-5',
 ]
 
 const commonOpenAIModels = [
