@@ -32,10 +32,12 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const {
       botId,
-      resultId,   // optional — links to the deterministic grade
-      runId,      // optional
-      transcript, // the raw transcript text
+      resultId,     // optional — links to the deterministic grade
+      runId,        // optional
+      interactionId, // optional — the real call id, for joining with audit_feedback
+      transcript,   // the raw transcript text
       claudeVerdict,
+      softScores,   // optional — [{ruleName, score, reason}], the LLM grader's qualitative scores
     } = body
 
     if (!botId || !claudeVerdict) {
@@ -63,8 +65,9 @@ export async function POST(request: NextRequest) {
     db.prepare(`
       INSERT INTO llm_verdicts
         (id, bot_id, result_id, run_id, test_case_id, verdict,
-         detected_flow, confidence, failures, summary, remarks, transcript)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         detected_flow, confidence, failures, summary, remarks, transcript,
+         interaction_id, soft_scores)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       id,
       botId,
@@ -78,6 +81,8 @@ export async function POST(request: NextRequest) {
       parsed.summary || null,
       parsed.remarks || null,
       transcript || null,
+      interactionId || null,
+      softScores ? stringifyJson(softScores) : null,
     )
 
     return NextResponse.json({
@@ -85,6 +90,7 @@ export async function POST(request: NextRequest) {
       id,
       verdict: parsed.verdict,
       failures: parsed.failures || [],
+      softScores: softScores || [],
     })
   } catch (error) {
     console.error('Error saving LLM verdict:', error)
